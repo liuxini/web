@@ -1,0 +1,129 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto {
+	overflow: hidden;
+	_zoom: 1;
+	_float: left;
+	border: 1px solid #c2d1d8;
+}
+.col-right {
+	float: right;
+	width: 210px;
+	overflow: hidden;
+	margin-left: 6px;
+	border: 1px solid #c2d1d8;
+}
+
+body fieldset {
+	border: 1px solid #D8D8D8;
+	padding: 10px;
+	background-color: #FFF;
+}
+body fieldset legend {
+    background-color: #F9F9F9;
+    border: 1px solid #D8D8D8;
+    font-weight: 700;
+    padding: 3px 8px;
+}
+.list-dot{ padding-bottom:10px}
+.list-dot li,.list-dot-othors li{padding:5px 0; border-bottom:1px dotted #c6dde0; font-family:"宋体"; color:#bbb; position:relative;_height:22px}
+.list-dot li span,.list-dot-othors li span{color:#004499}
+.list-dot li a.close span,.list-dot-othors li a.close span{display:none}
+.list-dot li a.close,.list-dot-othors li a.close{ background: url("__ROOT__/statics/images/cross.png") no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:5px; bottom:5px}
+.list-dot li a.close:hover,.list-dot-othors li a.close:hover{background-position: left -46px}
+.list-dot-othors li{float:left;width:24%;overflow:hidden;}
+</style>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li><a href="{:U('AdminReservation/index')}">所有预约</a></li>
+     <li class="active"><a href="#">{$term.name|default='编辑预约信息'}</a></li>
+  </ul>
+  
+  <form class="well form-search" method="post" action="{:u('AdminResevation/edit_post')}">
+    <div class="search_type cc mb10">            
+        &nbsp;&nbsp; 时间：
+        <input type="text" name="post[reservate_time]" class="input length_2 J_date" value="{$post.reservate_time}" style="width:180px;" autocomplete="off">     
+    </div>
+  </form>
+  
+  <form name="myform" id="myform" action="{:u('AdminReservation/edit_post')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">       
+  <div class="col-auto">
+    <div class="table_full">
+      <table width="100%" cellpadding="2" cellspacing="2">
+      	
+      	<tr> <th width="80">ID</th>
+      		<td>
+              	<input type="hidden" name="post[reserid]" value="{$post.reserid}">{$post.reserid}
+              </td></tr>
+      	   <tr>
+              <th width="80">雇主姓名 </th>
+              <td>
+              	<input type="hidden" name="post[username]" value="{$post.username}">
+              	<input type="text" style="width:400px" name="post[username]" id="username" value="{$post.username}" required value="" style="color:" class="input input_hd J_title_color" placeholder="{$post.username}" onkeyup="strlen_verify(this, 'title_len', 160)" />
+              	<span class="must_red">*</span>
+              </td>
+            </tr>
+
+             <tr>
+              <th width="80">手机号</th>
+              <td>
+              	<input type="text" style="width:400px;" name="post[userphone]" id="userphone" value="{$post.userphone}" required value="" style="color:" class="input input_hd J_title_color" placeholder="{$post.userphone}"/>
+              	<span class="must_red">*</span>
+              </td>
+            </tr>
+      	
+             <tr>
+              <th width="80">服务类型</th>
+              <td>
+              	<select name="post[type]" id="type">  
+              	<option value ="{$post.type}">{$post.type}</option> 
+		  <option value ="月嫂">月嫂</option>  
+		  <option value ="育儿">育儿</option>  
+		  <option value="家务员">家务员</option>  
+		  <option value="临时小时工">临时小时工</option>  
+		  <option value ="包月小时工">包月小时工</option>  
+		  <option value ="老年陪护">老年陪护</option>  
+		  <option value="经纪人">经纪人</option>  
+		</select>  
+              </td>
+            </tr>
+            
+              <tr>
+              <th width="80">薪资</th>
+              <td>
+              	<input type="text" style="width:400px;" name="post[pay]" id="pay" value="{$post.pay}" required value="" style="color:" class="input input_hd J_title_color" placeholder="{$post.pay}" onkeyup="strlen_verify(this, 'title_len', 160)" />
+              	<span class="must_red">*</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th width="80">地址</th>
+              <td>
+              	<input type="text" style="width:200px;" name="post[address]" id="address" value="{$post.address}" required value="" style="color:" class="input input_hd J_title_color" placeholder="{$post.address}" onkeyup="strlen_verify(this, 'title_len', 160)" />
+              	<span class="must_red">*</span>
+              </td>
+            </tr>
+
+             <tr>
+              <th width="80">备注</th>
+              <td><textarea name='post[message]' id='message' value="{$post.message}" required style='width:98%;height:50px;' placeholder="{$post.message}">{$post.message}</textarea> </td>
+            </tr>
+
+     
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="form-actions">
+        <button class="btn btn_submit J_ajax_submit_btn"type="submit">提交</button>
+        <a class="btn" href="{:U('AdminPost/index')}">返回</a>
+  </div>
+ </form>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+
+</body>
+</html>

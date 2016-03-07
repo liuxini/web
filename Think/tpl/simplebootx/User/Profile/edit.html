@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>用户中心</title>
+<link href="__TMPL__Public/simpleboot/themes/cmf/theme.min.css" rel="stylesheet">
+<tc_include file="Public:head"/>
+</head>
+<body>
+	<div id="wrapper-outer" >
+    <div id="wrapper">
+        <div id="wrapper-inner">
+	 <tc_include file="Public:bodyhead" />
+            <!-- NAVIGATION -->
+            <div id="navigation">
+               <tc_include file="Public:nav" />
+            </div><!-- /.navigation -->
+	<div id="content">
+		<div class="container">
+			<div id="main">
+             <div class="row">
+                <div class="span3">
+	                <tc_include file="Public:usernav"/>
+                 </div>
+                    <div class="span9">
+                           <div class="tabs">
+                               <ul class="nav nav-tabs">
+                                   <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-list-alt"></i> 修改资料</a></li>
+                               </ul>
+                               <div class="tab-content box-shadow-1">
+                                   <div class="tab-pane active" id="one">
+                                   		<form class="form-horizontal J_ajaxForm" action="{:u('profile/edit_post')}" method="post">
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-user_nicename">昵称</label>
+                                   				<div class="controls">
+                                   					<input type="text" id="input-user_nicename" placeholder="昵称" name="user_nicename" value="{$user_nicename}">
+                                   				</div>
+                                   			</div>
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-sex">性别</label>
+                                   				<div class="controls">
+                                   					<php>
+	                                   				$sexs=array("0"=>"保密","1"=>"女","2"=>"男");
+	                                   				</php>
+                                   					<select id="input-sex" name="sex">
+                                   						<foreach name="sexs" item="vo">
+                                   						<php>$sexselected=$key==$sex?"selected":"";</php>
+                                   							<option value="{$key}" {$sexselected}>{$vo}</option>
+                                   						</foreach>
+                                   					</select>
+                                   				</div>
+                                   			</div>
+                                   			
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-address">地址</label>
+                                   				<div class="controls">
+                                   					<input type="text" id="input-address" placeholder="{$address}" name="address" value="{$address}"pattern="[\u4E00-\u9FA5]{2,}$" title="地址至少包含2个汉字">
+                                   				</div>
+                                   			</div>
+                                   			
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-userphone">手机号</label>
+                                   				<div class="controls">
+                                   					<input type="text" id="input-userphone" placeholder="{$userphone}" name="userphone" value="{$userphone}"pattern="[0-9]{11,15}$" title="手机号格式不符">
+                                   				</div>
+                                   			</div>
+                                   			      			
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-email">电子邮件</label>
+                                   				<div class="controls">
+                                   					<input type="text" id="input-useremail" placeholder="{$user_email}" name="user_email" value="{$user_email}" pattern="^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$"  
+                        title="邮箱正确格式：xxx@xxx.xxx">  
+                                   				</div>
+                                   			</div>
+                                   			<div class="control-group">
+                                   				<div class="controls">
+                                   					<button type="submit" class="btn J_ajax_submit_btn">保存</button>
+                                   				</div>
+                                   			</div>
+                                   		</form>
+                                   </div>
+                               </div>							
+                           </div>
+                    </div>
+                </div>
+               </div>
+              </div>
+            </div>
+	</div>
+	<!-- /container -->
+	<tc_include file="Public:footer" />
+	<tc_include file="Public:scripts" />
+	</div>
+	</div>
+</body>
+</html>

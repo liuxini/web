@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<tc_include file="Public:head" />
+	</head>
+	
+<body class="">
+	<div id="wrapper-outer">
+	<div id="wrapper">
+		<div class="wrapper-inner">
+			<tc_include file="Public:bodyhead" />
+			<div id="navigation">
+        		<tc_include file="Public:nav" />
+     		</div><!-- /.navigation -->
+     		<div id="content">
+			<div class="container ">
+				<div class="row">
+					<div class="span8">
+						<h1 class="page-header">搜索结果</h1>
+						<div class="properties-rows">
+	    				 <div class="row">
+	    				<foreach name= 'post' item='vo'>	
+	    			      	   <php>$smeta=json_decode($vo['smeta'],true);</php>	
+					        <div class="property span8">
+					            <div class="row">
+					                <div class="image span13">
+
+					                    <div class="content">					                    		                          
+				                              <a href="{:leuu('portal/detail/index',array('id'=>$vo['helperid']))}"></a>
+				                                   <if condition="empty($smeta['thumb'])"> 
+							<img src="__TMPL__Public/images/property-small-1.png" alt=""/>
+								<else /> 
+								<img height="200px" width="200px" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" />
+						        </if>		                                            		                                   		                              
+		             
+					                    </div><!-- /.content -->
+					                </div><!-- /.image -->
+					
+					                <div class="body span6">
+					                    <div class="title-price row">
+					                        <div class="title span2">
+					                            <h2><a href="{:leuu('portal/detail/index',array('id'=>$vo['helperid']))}">{$vo.helpername}</a></h2>
+					                        </div><!-- /.title -->
+					
+					 			<php>
+					            	$province = array("110000"=>"北京市","120000"=>"天津市","130000"=>"河北省","140000"=>"山西省","150000"=>"内蒙古自治区",
+					            					 "210000"=>"辽宁省","220000"=>"吉林省","230000"=>"黑龙江省","310000"=>"上海市","320000"=>"江苏省",
+					            					 "330000"=>"浙江省","340000"=>"安徽省","350000"=>"福建省","360000"=>"江西省","370000"=>"山东省",
+					            					 "410000"=>"河南省","420000"=>"湖北省","430000"=>"湖南省","440000"=>"广东省","450000"=>"广西壮族自治区",
+					            					 "460000"=>"海南省","500000"=>"重庆市","510000"=>"四川省","520000"=>"贵州省","530000"=>"云南省",
+					            					 "540000"=>"西藏自治区","610000"=>"陕西省","620000"=>"甘肃省","630000"=>"青海省","640000"=>"宁夏回族自治区",
+					            					 "650000"=>"新疆维吾尔自治区","710000"=>"台湾省","810000"=>"香港特别行政区","820000"=>"澳门特别行政区","900000"=>"外国"          		
+					            	);
+					            </php>
+					
+					                        <div class="location">
+					                          <p><img src="__TMPL__Public/images/bubble-address.png">{$province[$vo['province']]}{$vo.city}{$vo.livenow}
+					                        </div><!-- /.price -->
+					                    </div><!-- /.title -->
+					                   
+					                    <p><strong>年龄 ：</strong> {$vo.age} &nbsp;&nbsp;&nbsp; <strong> 学历 ： </strong> {$vo.school}</p>
+					                    <p><strong>自我评价:</strong> {$vo.selfdesc}</p>
+					                    <div class="area">
+					                       <p> <span class="key"><strong>工资:</strong></span><!-- /.key -->
+					                        <span class="value">{$vo.salary}</span><!-- /.value --></p>
+					                    </div><!-- /.area -->
+					                   
+					                </div><!-- /.body -->
+					           </div><!-- /.row -->
+							 </div><!-- /.property -->     
+	    					</foreach>
+	    					<div class="pagination">{$Page}</div>
+	    			 	</div><!-- /.row -->
+				</div><!-- /.properties-rows -->									
+					</div><!--span9-->		
+					<div class="sidebar span3">
+						<div class="widget our-agents">
+		    <div class="title">
+		        <h2>门店</h2>
+		    </div><!-- /.title -->
+		
+		    <div class="content">
+		        <div class="agent">
+		            <div class="image">
+		                <img src="__TMPL__Public/img/photos/emma-small.png" alt="">
+		            </div><!-- /.image -->
+		            <div class="name">Victoria Summer</div><!-- /.name -->
+		            <div class="phone">333-666-777</div><!-- /.phone -->
+		            <div class="email"><a href="mailto:victoria@example.com">victoria@example.com</a></div><!-- /.email -->
+		        </div><!-- /.agent -->
+		
+		        <div class="agent">
+		            <div class="image">
+		                <img src="__TMPL__Public/img/photos/john-small.png" alt="">
+		            </div><!-- /.image -->
+		            <div class="name">John Doe</div><!-- /.name -->
+		            <div class="phone">111-222-333</div><!-- /.phone -->
+		            <div class="email"><a href="mailto:john.doe@example.com">victoria@example.com</a></div><!-- /.email -->
+		        </div><!-- /.agent -->
+		    </div><!-- /.content -->
+		</div><!-- /.our-agents -->
+					</div>
+					
+				</div><!--row-->
+            </div>  
+		</div><!--container-->
+	</div><!--inner-->
+	<tc_include file="Public:footer"/>
+	<tc_include file="Public:QQ"/>
+	<tc_include file="Public:scripts"/>
+</div><!--wrapper-->
+</div><!--out-->
+
+</body>
+</html>

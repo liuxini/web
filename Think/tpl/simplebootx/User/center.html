@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>用户中心</title>
+<link href="__TMPL__Public/simpleboot/themes/cmf/theme.min.css" rel="stylesheet">
+<tc_include file="Public:head"/>
+
+<style>
+.control-label{
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+</style>
+</head>
+
+<body>
+	<div id="wrapper-outer" >
+    <div id="wrapper">
+        <div id="wrapper-inner">
+	 <tc_include file="Public:bodyhead" />
+            <!-- NAVIGATION -->
+            <div id="navigation">
+               <tc_include file="Public:nav" />
+            </div><!-- /.navigation -->
+	<div id="content">
+		<div class="container">
+			<div id="main">
+                <div class="row">
+                    <div class="span3">
+	                    <tc_include file="Public:usernav"/>
+                    </div>
+                    <div class="span9">
+                           <div class="tabs">
+                               <ul class="nav nav-tabs">
+                                   <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-list-alt"></i>个人中心</a></li>
+                               </ul>
+                               <div class="tab-content box-shadow-1">
+                                   <div class="tab-pane active" id="one">
+                                   		  <div class="span2">
+                                   		  <a href="{:U('profile/avatar')}">
+                                   			<if condition="empty($avatar)">
+								            <img src="__TMPL__/Public/images/headicon_128.png" class="headicon"/>
+								            <else/>
+								            <img src="{:sp_get_user_avatar_url($avatar)}" class="headicon"/>
+								            </if>
+								          </a>
+										  </div>      
+										  <div class="span3">
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-user_nicename">姓名</label>
+                                   				<div class="controls">
+                                   					{$user_nicename|default='未填写'}
+                                   				</div>
+                                   			</div>
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-sex">性别</label>
+                                   				<div class="controls">
+                                   				<php>
+                                   				$sexs=array("0"=>"保密","1"=>"女","2"=>"男");
+                                   				
+                                   				</php>
+                                   					{$sexs[$sex]}
+                                   				</div>
+                                   			</div>
+                                   			
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-userphone">手机号</label>
+                                   				<div class="controls">
+                                   				
+                                   					{$userphone|default='未填写'}
+                                   				</div>
+                                   			</div>
+                                   			
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-email">邮箱</label>
+                                   				<div class="controls">                                 				
+                                   					{$user_email|default='未填写'}
+                                   				</div>
+                                   			</div>
+                                   			
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-address">地址</label>
+                                   				<div class="controls">
+                                   				
+                                   					{$address|default='未填写'}
+                                   				</div>
+                                   			</div>
+                                   			
+                                   			
+                                   			
+                                   			<div class="control-group">
+                                   				<div class="controls">
+                                   					<a href="{:U('user/profile/edit')}" type="submit" class="btn">编辑</a>
+                                   				</div>
+                                   			</div>
+                                   		</div>
+                                   </div>
+                               </div>							
+                           </div>
+                    </div>
+                </div>
+			</div>
+	</div><!-- /container -->
+	</div>
+	</div>
+<tc_include file="Public:footer" />
+<tc_include file="Public:scripts" />
+	</div>
+	</div>
+</body>
+</html>

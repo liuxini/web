@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>用户中心</title>
+<link href="__TMPL__Public/simpleboot/themes/cmf/theme.min.css" rel="stylesheet">
+<tc_include file="Public:head"/>
+</head>
+
+<body >
+	<div id="wrapper-outer" >
+    <div id="wrapper">
+        <div id="wrapper-inner">
+	 <tc_include file="Public:bodyhead" />
+            <!-- NAVIGATION -->
+            <div id="navigation">
+               <tc_include file="Public:nav" />
+            </div><!-- /.navigation -->
+	<div id="content">
+		<div class="container">
+			<div id="main">
+                <div class="row">
+                    <div class="span3">
+	                    <tc_include file="Public:usernav"/>
+                    </div>
+                    <div class="span9">
+                           <div class="tabs">
+                               <ul class="nav nav-tabs">
+                                   <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-star"></i> 我的委托</a></li>
+                               </ul>
+                               <div class="tab-content box-shadow-1">
+                                   <div class="tab-pane active" id="one">
+                                   		<table class="table table-bordered table-striped table-hover">
+									    <thead>
+									      <tr>			        
+									        <th>委托类型</th>
+									        <th>工资</th>
+									        <th>服务时间</th>
+									        <th>状态</th>
+									        <th>详细要求</th>
+									        <th>操作</th>
+									      </tr>
+									    </thead>
+									    <tbody>
+									    <php>           
+									       $is_status=array("1"=>"预约成功","0"=>"新建成功，处理中","2"=>"预约失败");
+									     </php>
+									    <foreach name="reservation" item="vo">
+									      <tr>
+									        <td>{$vo.type}</td>
+									        <td>{$vo.pay}</td>									        	
+									        <td>{$vo.reservate_time}</td>
+									        <td>{$is_status[$vo['status']]}</td>
+									        <td>{$vo.message}</td>
+									        <if condition=" $vo['status'] eq 0 ">
+									        	<td><a href="{:leuu('portal/detail/showreser',array('id'=>$vo['reserid']))}">查看</a></td>			        
+									        </if>
+									      </tr>
+									    </foreach>
+									    </tbody>
+									  </table>
+                                   </div>
+                               </div>							
+                           </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<!-- /container -->
+	<tc_include file="Public:footer" />
+	<tc_include file="Public:scripts" />
+	</div>
+	</div>
+	
+</body>
+</html>

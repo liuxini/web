@@ -1,0 +1,100 @@
+<admintpl file="header"/>
+<style>
+.home_info li em {
+float: left;
+width: 100px;
+font-style: normal;
+}
+li {
+list-style: none;
+}
+
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div id="home_toptip"></div>
+  <h4 class="well">概况</h4>
+  <div class="block home_info">
+    <div id="chart_bar" class="chart_bar">
+    	<ul class="reservation">
+    		<li class="one">
+    			<span class="number">{$reser.all}</span>
+    			<span class="name">预约申请数</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$reser.today}</span>
+    			<span class="name">今日新增</span>
+    		</li >
+    		<li class="one">
+    			<span class="number">{$reser.success}</span>
+    			<span class="name">预约成功</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$reser.fail}</span>
+    			<span class="name">预约失败</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$reser.wait}</span>
+    			<span class="name">待处理</span>
+    		</li>
+    	</ul>
+    	<ul class="reservation">
+    		<li class="one">
+    			<span class="number">{$servi.all}</span>
+    			<span class="name">订单总数</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$servi.today}</span>
+    			<span class="name">今日新增</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$servi.success}</span>
+    			<span class="name">处理成功</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$servi.fail}</span>
+    			<span class="name">处理失败</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$servi.wait}</span>
+    			<span class="name">待处理</span>
+    		</li>
+    	</ul>
+    	
+    	<ul class="findjob">
+    		<li class="one">
+    			<span class="number">{$findjob.all}</span>
+    			<span class="name">工作申请数</span>
+    		</li>
+    		<li class="one">
+    			<span class="number">{$findjob.today}</span>
+    			<span class="name">今日新增</span>
+    		</li>
+    	</ul>
+    	
+    </div>
+  </div>
+  <h4 class="well">系统信息</h4>
+  <div class="home_info">
+    <ul>
+      <volist name="server_info" id="vo">
+        <li> <em>{$key}</em> <span>{$vo}</span> </li>
+      </volist>
+    </ul>
+  </div>
+  <h4 class="well">后台模板团队</h4>
+  <div class="home_info" id="home_devteam">
+    <ul>
+      <li> <em>ThinkCMF团队</em> <span>www.thinkcmf.com</span> </li>
+      <li> <em>团队成员</em> <span>Dean,Sam,Tuolaji,Smile,Codefans,睡不醒的猪,Jack,日本那只猫</span> </li>
+      <li> <em>联系邮箱</em> <span>cmf@simplewind.net</span> </li>
+    </ul>
+  </div>
+   
+</div>
+<script src="__ROOT__/statics/js/common.js"></script> 
+
+</body>
+</html>

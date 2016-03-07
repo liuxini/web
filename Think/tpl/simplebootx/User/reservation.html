@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<tc_include file="Public:head" />
+
+<link href="__TMPL__Public/css/jquery-ui.css"  rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__TMPL__Public/js/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/jquery-ui-datepicker.js"></script>
+<script type="text/javascript">
+	$(function() {$( "#date_1" ).datepicker();});
+</script>
+
+<script language=javascript>
+
+function checkpay(){
+	var pay = document.getElementById("input_pay");
+	var re_pay= new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(!re_pay.test(pay.value)){
+		input_pay.setCustomValidity('不能包含特殊字符');
+	}else{
+		input_pay.setCustomValidity('');
+	}
+}
+
+function checkmessage(){
+
+	var message = document.getElementById("message");
+	var re_message = new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(!re_message.test(message.value)){
+		message.setCustomValidity('自我描述不能包含特殊字符');
+	}else{
+		message.setCustomValidity('');
+	}
+}
+</script>
+
+</head>
+ <body class="J_scroll_fixed">
+ 	
+ 	<script type="text/javascript" src="__TMPL__Public/js/TestAddress1.js"></script>
+ <script type="text/javascript" src="__TMPL__Public/js/TestChooseAddress.js"></script> 
+ 
+ <script language="JavaScript">
+function loadProvince(regionId){
+  $("#id_provSelect").html("");
+  $("#id_provSelect").append("<option value=''>请选择省份</option>");
+  var jsonStr = getAddress(regionId,0);
+  for(var k in jsonStr) {
+	$("#id_provSelect").append("<option value='"+k+"'>"+jsonStr[k]+"</option>");
+  }
+  if(regionId.length!=6) {
+	$("#id_citySelect").html("");
+    $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  } else {
+	 $("#id_provSelect").val(regionId.substring(0,2)+"0000");
+	 loadCity(regionId);
+  }
+}
+
+function loadCity(regionId){
+  $("#id_citySelect").html("");
+  $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  if(regionId.length==6) {
+	var jsonStr = getAddress(regionId,1);
+    for(var k in jsonStr) {
+	  $("#id_citySelect").append("<option value='"+jsonStr[k]+"'>"+jsonStr[k]+"</option>");
+    }	
+  }
+}
+</script>
+ 	
+ <div id="wrapper-outer" >
+    <div id="wrapper">
+        <div id="wrapper-inner">
+            <tc_include file="Public:bodyhead" />
+            	<div id="navigation">
+               		<tc_include file="Public:nav" />
+            	</div><!-- /.navigation -->
+            <div id="content">
+            	<div class="container">
+            		<div id="main">
+	           			<div class="row">
+                          <h1 class="page-header">提交委托</h1>
+                          <form  action="{:U('index/reservation_post')}" method="post">
+                          <div class="login-register">
+                            <div class="row">
+                              <div class="span6 box-shadow-1">
+                                     
+                                     <div class="tab-content">
+                                      <div class="tab-pane active" id="register">
+                                   <div class="control-group1">      
+                                   		<div class="controls1">
+                                        	<label class="field">真实姓名： </label>
+                                       		<div class="inputfind">
+                                            <input type="text" id="input_username" name="post[username]" required placeholder="{$post.user_nicename}" value="{$post.user_nicename}"class="span3" pattern="^[\u4e00-\u9fa5]+$" 
+                                            title="姓名只能为中文">                                         
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                      <div class="control-group1">
+                                        <div class="controls1">
+                                        	 <label class="field">手机号：</label>
+                                        <div class="inputfind">
+                                            <input type="text" id="input_userphone" name="post[userphone]" required placeholder="{$post.userphone}" value="{$post.userphone}" class="span3" pattern="[0-9]{11,15}$" title="手机号格式不符">
+                                        </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group1">
+                                         <div class="controls1">
+                                        	 <label class="field">雇用工种</label>
+                                        <div class="inputfind">
+                                            <select name="post[type]" id="type">  
+                                              <option value ="月嫂">月嫂</option>  
+                                              <option value ="育儿嫂">育儿嫂</option>  
+                                              <option value="家务员">家务员</option>  
+                                              <option value="临时小时工">临时小时工</option>  
+                                              <option value ="包月小时工">包月小时工</option>  
+                                              <option value ="老年陪护">老年陪护</option>  
+                                              <option value="经纪人">经纪人</option>  
+                                            </select>  
+                                        </div>
+                                       </div>
+                                    </div>
+                                    
+
+                                      <div class="control-group1">
+                                        <div class="controls1">
+                                        	 <label class="field">服务时间</label>
+                                     <div class="inputfind">
+                                     <input type="text" name="post[reservate_time]" id="date_1" value="{:date('Y-m-d',time())}" >
+                                   		</div>
+                                    	</div>
+                                    </div>
+                                    
+                                     <div class="control-group1">
+                                        <div class="controls1">
+                                        	<label class="field">现居地： </label>
+                                        	<div class="inputfind">
+                                            <select id="id_provSelect" name="post[province]" onChange="loadCity(this.value);">
+							                 <option value="">请选择区域</option>
+							              	</select>
+							                <select id="id_citySelect" name="post[city]">
+							                    <option value="">请选择城市</option>
+							                </select>
+                                        </div>
+                                         </div>
+                                    </div>
+                                    <script language="JavaScript">loadProvince('110101');</script>
+                                    
+                                     <div class="control-group1">
+                                        <div class="controls1">
+                                        	 <label class="field">详细地址：</label>
+                                        <div class="inputfind">
+                                            <input type="text" id="input_address" name="post[address]" required placeholder="{$post.address}" value="{$post.address}" class="span3" pattern="[a-zA-Z0-9\u4E00-\u9FA5]{2,}$"
+                                            title="现居地至少需要2个字符">
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                     <div class="control-group1">
+                                         <div class="controls1">
+                                        	 <label class="field">可接受工资： </label>
+                                        	 <div class="inputfind">
+                                            <input type="text" id="input_pay" name="post[pay]" required placeholder="默认为xx/月" class="span3" onchange="checkpay()">
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                     <div class="control-group1">
+                                        <div class="controls1">
+                                        	<label class="field">验证码： </label>
+                                        	<div class="inputfind"> 
+                                          	<input type="text" id="input_verify" required name="verify" placeholder="请输入验证码" class="span3">
+                                          {:sp_verifycode_img('code_len=4&font_size=15&width=100&height=35&charset=1234567890')}</input>
+                                         </div>
+                                    </div>
+                                   </div> 
+
+                                   <div class="control-group2">
+                                    <div class="controls1">
+                                       <label class="field">详细信息</label>
+                                    <div class="inputfind">
+                                    	<textarea name='post[message]' id='message'  required style='width:50%;height:80px;' placeholder='请填写您的详细情况和具体需求。'onchange="checkmessage()"></textarea> 
+                                </div>
+                                </div>
+                                </div>
+
+                                  <div class="control-group1">                               	 
+                                	<div class="inputfind">
+                                		<div class="form-actions1">
+		               				 	<input type="submit" value="同意用户协议并提交 " class="btn btn-primary btn-large">		               				 	
+		            					</div>
+		            				</div>                                 
+                                    </div>
+                                    </div><!--tabpane-->
+                                </div><!--tabcontent-->
+                                        </form>
+                                       
+                                    
+                                    </div><!--span4-->
+                                        
+                            </div><!--login-->
+                                </div><!--row-->
+                            </div><!--reser-book-->
+                        </div><!-- /.row-->
+                    </div><!-- /.main-->
+                    </div><!-- /.container-->
+                 </div>
+                 </div>
+            <tc_include file="Public:footer" />
+     </div>
+     </div>
+</body>
+</html>

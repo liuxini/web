@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>	
+   <tc_include file="Public:head" />   
+   
+   <style>
+*{ margin:0; padding:0; list-style:none}
+img{ border:0;}
+.lanrenzhijia_service{ width:40px; height:200px; background:url("__TMPL__Public/images/lanrenzhijia.png") no-repeat; position:fixed; right:0px; top:200px;}
+.lanrenzhijia_service ul{ display:block; width:160px; height:200px; float:left; position:relative;}
+.lanrenzhijia_service ul .right_bar{ position:absolute;width:40px; height:200px; left:0; top:0; display:block;}
+.lanrenzhijia_service ul .right_qq{ position:absolute; width:120px; height:85px; right:0; top:0; display:block;}
+.lanrenzhijia_service ul .right_phone{ position:absolute; width:120px; height:105px; padding-top:10px;right:0; bottom:0; display:block; text-align:center; color:#555; font-size:16px; font-family:'Microsoft Yahei'; text-decoration:none;}
+</style>
+   
+</head>
+
+<body>
+	 <script type="text/javascript" src="__TMPL__Public/js/jquery.js"></script> 
+	 <script type="text/javascript" src="__TMPL__Public/js/TestAddress1.js"></script>
+ 	<script type="text/javascript" src="__TMPL__Public/js/TestChooseAddress.js"></script> 
+ 
+<script language="JavaScript">
+function loadProvince(regionId){
+  $("#id_provSelect").html("");
+  $("#id_provSelect").append("<option value=''>请选择省份</option>");
+  var jsonStr = getAddress(regionId,0);
+  for(var k in jsonStr) {
+	$("#id_provSelect").append("<option value='"+k+"'>"+jsonStr[k]+"</option>");
+  }
+  if(regionId.length!=6) {
+	$("#id_citySelect").html("");
+    $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  } else {
+	 $("#id_provSelect").val(regionId.substring(0,2)+"0000");
+	 loadCity(regionId);
+  }
+}
+
+function loadCity(regionId){
+  $("#id_citySelect").html("");
+  $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  
+  if(regionId.length==6) {
+	var jsonStr = getAddress(regionId,1);
+    for(var k in jsonStr) {  	
+	  $("#id_citySelect").append("<option value='"+jsonStr[k]+"'>"+jsonStr[k]+"</option>");
+    }
+   
+  }
+}
+</script>
+	
+	
+	<div id="wrapper-outer" >
+    	<div id="wrapper">
+    		<div id="wrapper-inner">
+				<tc_include file="Public:bodyhead" />
+				<div id="navigation">
+               		<tc_include file="Public:nav" />
+           		 </div><!-- /.navigation -->
+				<div id="content">
+					<div class="container">
+    				
+    				<div class="row">
+    					<div class="span8">
+    					  <h1 class="page-header">{$type}</h1>
+
+	    			     			
+					<div class="properties-rows ">
+	    				 <div class="row">
+	    				<foreach name= 'post' item='vo'>	
+	    			      	   <php>$smeta=json_decode($vo['smeta'],true);</php>	
+					        <div class="property span8">
+					            <div class="row ">
+					                <div class="image span13">
+
+					                    <div class="content">					                    		                          
+				                              <a href="{:leuu('portal/detail/index',array('id'=>$vo['helperid']))}"></a>
+				                                   <if condition="empty($smeta['thumb'])"> 
+							<img src="__TMPL__Public/images/property-small-1.png" alt=""/>
+								<else /> 
+								<img height="200px" width="200px" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" />
+						        </if>		                                            		                                   		                              
+		             
+					                    </div><!-- /.content -->
+					                </div><!-- /.image -->
+					
+					                <div class="body span6">
+					                    <div class="title-price row">
+					                        <div class="title span2">
+					                            <h2><a href="{:leuu('portal/detail/index',array('id'=>$vo['helperid']))}">{$vo.helpername}</a></h2>
+					                        </div><!-- /.title -->
+					
+					 			<php>
+					            	$province = array("110000"=>"北京市","120000"=>"天津市","130000"=>"河北省","140000"=>"山西省","150000"=>"内蒙古自治区",
+					            					 "210000"=>"辽宁省","220000"=>"吉林省","230000"=>"黑龙江省","310000"=>"上海市","320000"=>"江苏省",
+					            					 "330000"=>"浙江省","340000"=>"安徽省","350000"=>"福建省","360000"=>"江西省","370000"=>"山东省",
+					            					 "410000"=>"河南省","420000"=>"湖北省","430000"=>"湖南省","440000"=>"广东省","450000"=>"广西壮族自治区",
+					            					 "460000"=>"海南省","500000"=>"重庆市","510000"=>"四川省","520000"=>"贵州省","530000"=>"云南省",
+					            					 "540000"=>"西藏自治区","610000"=>"陕西省","620000"=>"甘肃省","630000"=>"青海省","640000"=>"宁夏回族自治区",
+					            					 "650000"=>"新疆维吾尔自治区","710000"=>"台湾省","810000"=>"香港特别行政区","820000"=>"澳门特别行政区","900000"=>"外国"          		
+					            	);
+					            </php>
+					
+					                        <div class="location">
+					                          <p><img src="__TMPL__Public/images/bubble-address.png">{$province[$vo['province']]}{$vo.city}{$vo.livenow}
+					                        </div><!-- /.price -->
+					                    </div><!-- /.title -->
+					                   
+					                    <p><strong>年龄 ：</strong> {$vo.age} &nbsp;&nbsp;&nbsp; <strong> 学历 ： </strong> {$vo.school}</p>
+					                    <p><strong>自我评价:</strong> {$vo.selfdesc}</p>
+					                    <div class="area">
+					                       <p> <span class="key"><strong>工资:</strong></span><!-- /.key -->
+					                        <span class="value">{$vo.salary}</span><!-- /.value --></p>
+					                    </div><!-- /.area -->
+					                   
+					                </div><!-- /.body -->
+					           </div><!-- /.row -->
+							 </div><!-- /.property -->     
+	    					</foreach>
+	    					<div class="pagination">{$Page}</div>
+	    			 	</div><!-- /.row -->
+				</div><!-- /.properties-rows -->
+			
+			 
+    		</div><!--span9-->
+    		
+    		  <div class="sidebar span3 ">
+                <h2>快速查找</h2>
+<div class="property-filter widget box-shadow-1">
+    <div class="content">
+        <form id="select" method="post" action="{:u('list/sortlist')}">
+            <div class="location control-group">
+                <label class="control-label" for="inputLocation">
+                   	 学历
+                </label>
+                <div class="controls">
+                    <select name="school" id="school" value="{$formget.shcool}">
+                    	<option value= >全部</option>>
+                         <option value ="小学">小学</option>  
+						  <option value="初中">初中</option>  
+						  <option value="高中">高中</option>  
+						  <option value ="大专">大专</option>  
+						  <option value ="本科">本科</option>  
+						  <option value ="其他">其他</option> 
+                    </select>
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+			<input type="hidden" id="type" name="type" value="{$type}" >
+            <div class="type control-group">
+                <label class="control-label" for="inputType">
+                    	年龄
+                </label>
+                <div class="controls">
+                    <select name="age" id="age" value="{$formget.age}">
+                    	<option value= >全部 </option>>
+                        <option value="35">35岁以下</option>
+                        <option value="48">36-48岁</option>
+                        <option value="49">49岁以上</option>
+                    </select>
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+            
+            <div class="type control-group">
+                <label class="control-label" for="inputplace">
+                    	地点
+                </label>
+                <div class="controls">
+                   <select id="id_provSelect" name="province" onChange="loadCity(this.value);">
+	                 <option value="">请选择区域</option>
+	              	</select>
+                <select id="id_citySelect" name="city">
+                    <option value="">请选择城市</option>
+                </select> 
+               
+                </div><!-- /.controls -->
+                
+            </div><!-- /.control-group -->
+              <script language="JavaScript">loadProvince('110101');</script> 
+            
+            <div class="type control-group">
+                <label class="control-label" for="inputType">
+                    	排序
+                </label>
+                <div class="controls">
+                    <select name="sort" id="sort" value="{$formget.sort}">
+                        <option value= >默认</option>
+                        <option value="hits">收藏量</option>
+                    </select>
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->				
+		            <div class="form-actions">
+		                <input type="submit" value="开始查找" class="btn btn-primary btn-large">
+		            </div><!-- /.form-actions -->
+		        </form>
+		    </div><!-- /.content -->
+		</div><!-- /.property-filter -->
+		                <div class="widget our-agents">
+		    <div class="title">
+		        <h2>门店</h2>
+		    </div><!-- /.title -->
+		
+		    <div class="content">
+		        <div class="agent">
+		            <div class="image">
+		                <img src="__TMPL__Public/img/photos/emma-small.png" alt="">
+		            </div><!-- /.image -->
+		            <div class="name">Victoria Summer</div><!-- /.name -->
+		            <div class="phone">333-666-777</div><!-- /.phone -->
+		            <div class="email"><a href="mailto:victoria@example.com">victoria@example.com</a></div><!-- /.email -->
+		        </div><!-- /.agent -->
+		
+		        <div class="agent">
+		            <div class="image">
+		                <img src="__TMPL__Public/img/photos/john-small.png" alt="">
+		            </div><!-- /.image -->
+		            <div class="name">John Doe</div><!-- /.name -->
+		            <div class="phone">111-222-333</div><!-- /.phone -->
+		            <div class="email"><a href="mailto:john.doe@example.com">victoria@example.com</a></div><!-- /.email -->
+		        </div><!-- /.agent -->
+		    </div><!-- /.content -->
+		</div><!-- /.our-agents -->
+		                
+		            </div>
+    		
+  			</div><!-- /.row -->
+			</div><!--container tcmain-->
+			</div><!--#container-->
+		</div><!--wrapper inner-->
+<div class="lanrenzhijia_service">
+  <ul>
+    <span class="right_bar"></span>
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=525945990&site=qq&menu=yes" class="right_qq" target="_blank"></a>
+    <span class="right_phone">12345678956</span>
+  </ul>
+</div>       
+  <script type="text/javascript" src="__TMPL__Public/js/jquery.js"></script> 
+  <script type="text/javascript" src="__TMPL__Public/js/carousel.js"></script>     
+ <script>
+$(function(){
+	$(".lanrenzhijia_service").hover(function(){
+		$(this).animate({width:'160px'});
+	},function(){
+		$(this).animate({width:'40px'});
+	});
+});
+</script>
+		
+<tc_include file="Public:footer" />
+      	      	
+     </div><!--wrapper-->
+   </div><!--wrapper outer-->
+
+</body>
+</html>

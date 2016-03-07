@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<tc_include file="Public:head" />
+
+ <link href="__TMPL__Public/css/jquery-ui.css"  rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__TMPL__Public/js/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/jquery-ui-datepicker.js"></script>
+<script type="text/javascript">
+	$(function() {$( "#date_1" ).datepicker();});
+</script>
+
+<script language=javascript>
+
+function checkpay(){
+	var pay = document.getElementById("input_pay");
+	var re_pay= new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(!re_pay.test(pay.value)){
+		input_pay.setCustomValidity('不能包含特殊字符');
+	}else{
+		input_pay.setCustomValidity('');
+	}
+}
+
+function checkmessage(){
+
+	var message = document.getElementById("message");
+	var re_message = new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(!re_message.test(message.value)){
+		message.setCustomValidity('自我描述不能包含特殊字符');
+	}else{
+		message.setCustomValidity('');
+	}
+}
+</script>
+
+</head>
+ <body>
+            <tc_include file="Public:bodyhead" />
+            	<div id="navigation">
+               		<tc_include file="Public:nav" />
+            	</div><!-- /.navigation -->
+           
+            <div class="container">
+            	       <div id="main">
+	           <div class="row">
+                          <h1 class="page-header">提交预约</h1>
+                          <div class="login-register">
+                            <div class="row">
+                                <div class="span35 box-shadow-1">
+                                    
+                                     <div class="tab-content">
+                                      <div class="tab-pane active" id="register">
+                                         <form  action="{:U('detail/book_post')}" method="post">
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="input_username">姓名</label>
+                                        <div class="controls">
+                                            <input type="text" id="input_username" name="post[username]" placeholder="{$post.username}" required="required" value="{$post.username}"  class="span3"
+                                            pattern="^[\u4e00-\u9fa5]+$" title="姓名只能为中文">
+                                        </div>
+                                    </div>
+
+                                      <div class="control-group">
+                                        <label class="control-label" for="input_address">地址</label>
+                                        <div class="controls">
+                                            <input type="text" id="input_address" name="post[address]" placeholder="{$post.address}" required="required" value="{$post.address}" class="span3" pattern="[a-zA-Z0-9\u4E00-\u9FA5]{2,}$"
+                                            title="现居地至少需要2个字">
+                                        </div>
+                                    </div>
+
+                                      <div class="control-group">
+                                        <label class="control-label" for="input_userphone">手机号</label>
+                                        <div class="controls">
+                                            <input type="text" id="input_userphone" name="post[userphone]" placeholder="{$post.userphone}" required="required" value="{$post.userphone}" class="span3" pattern="[0-9]{11,15}$" title="手机号格式不符">
+                                        </div>
+                                    </div>
+
+                                      <div class="control-group">
+                                        <p>服务时间</p>
+                                    <tr>
+                                      <td><input type="text" name="post[service_time]" id="date_1" value="{:date('Y-m-d',time())}" ></td>
+                                    </tr>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="input_pay">可接受工资</label>
+                                        <div class="controls">
+                                            <input type="text" id="input_pay" name="post[pay]" placeholder="{$post.pay}" required="required" class="span3" onchange="checkpay()">
+                                            <input type="hidden" id="input_pay" name="helper[helperid]" placeholder="{$helper.helperid}" value="{$helper.helperid}" class="span3">
+                                             <input type="hidden" id="input_pay" name="helper[helpername]" placeholder="{$post.pay}" value="{$helper.helpername}" class="span3">
+                                              <input type="hidden" id="input_pay" name="helper[type]" placeholder="{$post.pay}" value="{$helper.type}" class="span3">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <th width="80">验证码</th>
+                                        <td>
+                                          <input type="text" id="input_verify" name="verify" required placeholder="请输入验证码" class="span3">
+                                          {:sp_verifycode_img('code_len=4&font_size=15&width=100&height=35&charset=1234567890')}
+                                        </td>
+                                    </div>
+
+                                   <div class="control-group">
+                                    <th width="80">详细信息</th>
+                                    <td><textarea name='post[message]' id='message'  required style='width:98%;height:50px;' placeholder='请填写您的详细情况和具体需求。' onchange="checkmessage()"></textarea> </td>
+                                </div>
+
+                                     <div class="control-group">
+                                        <button class="btn btn_submit J_ajax_submit_btn" type="submit">提交</button>
+                                        <a class="btn" href="{:U('index/index')}">返回</a>
+                                    </div>
+                                        </form>
+                                       
+                                    </div><!--tabpane-->
+                                </div><!--tabcontent-->
+                                    </div><!--span4-->
+                                        <div class="sidebar1 span5 box-shadow-1">
+                                            <div class="detail_right">
+                                           <ul class="tab">
+                                         <li><span class="current" data-for="area1">阿姨信息</span></li>
+                                             </ul>
+                                             <div class="summary area1" style="display: block;">
+                                                 <p><strong><th width="180"> 阿姨ID : </th></strong>{$helper.helperid} </p>
+                                                <p><strong><th width="180"> 姓名 : </th></strong>{$helper.helpername} </p>
+                                                <p><strong> 工作类型 : </strong>{$helper.type} </p>
+                                                <p><strong> 现居地 : </strong>{$helper.livenow} </p>
+                                                <p><strong> 年龄 : </strong>{$helper.age} </p>
+                                                 <p><strong> 民族 : </strong>{$helper.nation} </p>                                                                                                                       
+                                                 <p><strong> 学历 : </strong>{$helper.school} </p>
+                                                 <p></p>
+                                             </div><!--summary-->
+                                    </div>
+                                </div><!--sidebar-->
+                            </div><!--login-->
+                                </div><!--row-->
+                            </div><!--reser-book-->
+                        </div><!-- /.row-->
+                    </div><!-- /.main-->
+                    </div><!-- /.container-->
+                 
+            <tc_include file="Public:footer" />       	
+
+</body>
+</html>

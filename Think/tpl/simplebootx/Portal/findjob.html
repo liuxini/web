@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<tc_include file="Public:head" />
+
+<style>
+*{ margin:0; padding:0; list-style:none}
+img{ border:0;}
+.lanrenzhijia_service{ width:40px; height:200px; background:url(http://demo.lanrenzhijia.com/2014/service0924/images/lanrenzhijia.png) no-repeat; position:fixed; right:0px; top:200px;}
+.lanrenzhijia_service ul{ display:block; width:160px; height:200px; float:left; position:relative;}
+.lanrenzhijia_service ul .right_bar{ position:absolute;width:40px; height:200px; left:0; top:0; display:block;}
+.lanrenzhijia_service ul .right_qq{ position:absolute; width:120px; height:85px; right:0; top:0; display:block;}
+.lanrenzhijia_service ul .right_phone{ position:absolute; width:120px; height:105px; padding-top:10px;right:0; bottom:0; display:block; text-align:center; color:#555; font-size:16px; font-family:'Microsoft Yahei'; text-decoration:none;}
+</style>
+
+<script language=javascript>
+function checkpay(){
+	var pay = document.getElementById("input_salary");
+	var re_pay= new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(!re_pay.test(pay.value)){
+		input_salary.setCustomValidity('不能包含特殊字符');
+	}else{
+		input_salary.setCustomValidity('');
+	}
+}
+
+function checkage(){
+	var age = document.getElementById("input_age");
+	var re_age= new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(!re_age.test(age.value)){
+		input_age.setCustomValidity('不能包含特殊字符');
+	}else{
+		input_age.setCustomValidity('');
+	}
+}
+
+function checkself(){
+	var selfdesc = document.getElementById("selfdesc");
+	var re_selfdesc = new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(!re_selfdesc.test(selfdesc.value)){
+		selfdesc.setCustomValidity('自我描述不能包含特殊字符');
+	}else{
+		selfdesc.setCustomValidity('');
+	}
+}
+</script>
+
+</head>
+ <body>
+ <script type="text/javascript" src="__TMPL__Public/js/jquery.js"></script>	
+ <script type="text/javascript" src="__TMPL__Public/js/TestAddress1.js"></script>
+ <script type="text/javascript" src="__TMPL__Public/js/TestChooseAddress.js"></script> 
+ 
+ <script language="JavaScript">
+function loadProvince(regionId){
+  $("#id_provSelect").html("");
+  $("#id_provSelect").append("<option value=''>请选择省份</option>");
+  var jsonStr = getAddress(regionId,0);
+  for(var k in jsonStr) {
+	$("#id_provSelect").append("<option value='"+k+"'>"+jsonStr[k]+"</option>");
+  }
+  if(regionId.length!=6) {
+	$("#id_citySelect").html("");
+    $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  } else {
+	 $("#id_provSelect").val(regionId.substring(0,2)+"0000");
+	 loadCity(regionId);
+  }
+}
+
+function loadCity(regionId){
+  $("#id_citySelect").html("");
+  $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  if(regionId.length==6) {
+	var jsonStr = getAddress(regionId,1);
+    for(var k in jsonStr) {
+	  $("#id_citySelect").append("<option value='"+jsonStr[k]+"'>"+jsonStr[k]+"</option>");
+    }	
+  }
+}
+</script>
+ 	
+       <div id="wrapper-outer" >
+    <div id="wrapper">
+        <div id="wrapper-inner">
+	 <tc_include file="Public:bodyhead" />
+            <!-- NAVIGATION -->
+            <div id="navigation">
+               <tc_include file="Public:nav" />
+            </div><!-- /.navigation -->
+	<div id="content">
+		<div class="container">
+            	       <div id="main">
+	           <div class="row">
+	           	  <h1 class="page-header">提交工作申请</h1>
+                   <form  action="{:U('index/findjob_post')}" method="post">
+
+                <div class="login-register">
+                            <div class="row">
+                              <div class="span6 box-shadow-1">
+                                
+                                    <div class="tab-content">
+                                      <div class="tab-pane active" id="register">
+                                    
+                                           <div class="control-group1">
+                                       
+                                        <div class="controls1">
+                                        	 <label class="field">真实姓名： </label>
+                                           <div class="inputfind"> <input type="text" id="input_helpername" name="post[helpername]" required placeholder="{$post.user_nicename}" value="{$post.user_nicename}" class="span3" pattern="^[\u4e00-\u9fa5]+$" 
+                                            title="姓名只能为中文"></div>
+                                        </div>
+                                    </div>
+                                    
+                                      <div class="control-group1">
+                                       
+                                        <div class="controls1">
+                                        	 <label class="field">手机号： </label>
+                                            <div class="inputfind"><input type="text" id="input_phonenum" name="post[phonenum]" required placeholder="{$post.userphone}" value="{$post.userphone}" class="span3" pattern="[0-9]{11,15}$" title="手机号格式不符">
+                                        </div></div>
+                                    </div>
+
+                                    <div class="control-group1">
+                                         <div class="controls1">
+                                        	 <label class="field">身份证号： </label>
+                                            <div class="inputfind">
+                                            	<input type="text" id="input_idcard" name="post[idcard]" required placeholder="{$post.idcard}" class="span3" pattern="[0-9]{15,18}$" title="身份证格式不符">
+                                        	</div>
+                                         </div>
+                                    </div>
+
+                                    <div class="control-group1">
+                                         <div class="controls1">
+                                        	  <label class="field">工种： </label>
+                                        	 <div class="inputfind">
+                                            <select name="post[type]" id="type">  
+                                              <option value ="月嫂">月嫂</option>  
+                                              <option value ="育儿嫂">育儿嫂</option>  
+                                              <option value="家务员">家务员</option>  
+                                              <option value="临时小时工">临时小时工</option>  
+                                              <option value ="包月小时工">包月小时工</option>  
+                                              <option value ="老年陪护">老年陪护</option>  
+                                            </select>  
+                                           </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group1">
+                                         <div class="controls1">
+                                        	 <label class="field">可接受工资： </label>
+                                        	 <div class="inputfind">
+                                            <input type="text" id="input_salary" name="post[salary]" required placeholder="默认为xx/月" class="span3" onchange="checkpay()">
+                                        </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group1">
+                                        <div class="controls1">
+                                        	<label class="field">现居地： </label>
+                                        	<div class="inputfind">
+                                            <select id="id_provSelect" name="post[province]" onChange="loadCity(this.value);">
+							                 <option value="">请选择区域</option>
+							              	</select>
+							                <select id="id_citySelect" name="post[city]">
+							                    <option value="">请选择城市</option>
+							                </select>
+                                        </div>
+                                         </div>
+                                    </div>
+                                    <script language="JavaScript">loadProvince('110101');</script>  
+
+                                      <div class="control-group1">
+                                        <div class="controls1">
+                                        	<label class="field">详细地址： </label>
+                                        	<div class="inputfind"> 
+                                            	<input type="text" id="input_livenow" name="post[livenow]" required placeholder="{$post.address}" value="{$post.address}" class="span3" pattern="[a-zA-Z0-9\u4E00-\u9FA5]{2,}$"
+                                            title="现居地至少需要2个字">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <tr>
+          							<td><input type="hidden" name="post[post_date]" id="updatetime" value="{:date('Y-m-d',time())}" size="21" class="input length_3 J_datetime "></td>
+        							</tr>
+
+                                    <div class="control-group1">
+                                         <div class="controls1">
+                                        	 <label class="field">民族： </label>
+                                        	<div class="inputfind">  
+                                            	<input type="text" id="input_nation" name="post[nation]" required class="span3" pattern="^[\u4e00-\u9fa5]+$" title="只能为汉字">
+                                        	</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group1">
+                                         <div class="controls1">
+                                        	 <label class="field">年龄： </label>
+                                        	<div class="inputfind">    
+                                            <input id="input_age" type="text"  name="post[age]" required class="span3" onchange="checkage()">
+                                       	</div>
+                                         </div>
+                                    </div>
+
+                                    <div class="control-group1">
+                                         <div class="controls1">
+                                        	<label class="field">学历：</label>
+                                        	<div class="inputfind"> 
+                                            <select name="post[school]" id="school">  
+                                                <option value ="小学">小学</option>  
+                                                <option value="初中">初中</option>  
+                                                <option value="高中">高中</option>  
+                                                <option value ="大专">大专</option>  
+                                                <option value ="本科">本科</option>  
+                                                <option value ="其他">其他</option>  
+                                            </select>  
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group1">
+                                        <div class="controls1">
+                                        	<label class="field">验证码： </label>
+                                        	<div class="inputfind"> 
+                                          	<input type="text" id="input_verify" required name="verify" placeholder="请输入验证码" class="span3">
+                                          {:sp_verifycode_img('code_len=4&font_size=15&width=100&height=35&charset=1234567890')}</input>
+                                         </div>
+                                    </div>
+                                   </div> 
+
+                                   <div class="control-group2">
+                                  <div class="controls1">
+                                       <label class="field">自我描述： </label>
+                                        <div class="inputfind">	
+                                    	<textarea name='post[selfdesc]' id='selfdesc'  required style='width:50%;height:80px;' placeholder='请填写您的详细介绍，如:工作经验，技能特长等'onchange="checkself()"></textarea> </td>
+                                	</div> 
+                                	</div> 
+                                </div>    
+                                <div class="control-group1">                               	 
+                                	<div class="inputfind">
+                                		<div class="form-actions1">
+		               				 	<input type="submit" value="同意用户协议并提交 " class="btn btn-primary btn-large">		               				 	
+		            					</div>
+		            				</div>                                 
+                                    </div>  
+
+                                    </div><!--tabpane-->
+                                </div><!--tabcontent-->
+                                                   
+                                </form>  
+                              </div><!--span8-->
+                            </div><!--row-->
+                      </div><!--login-register-->
+	           </div><!--row-->
+	       </div><!--main-->
+	   </div><!--container-->
+	   </div>
+	  </div>
+	 </div>
+      <script type="text/javascript" src="__ROOT__/statics/js/wind.js"></script>
+ 	<!--<script type="text/javascript" src="__TMPL__Public/js/jquery.js"></script>-->
+    <script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+    
+    <div class="lanrenzhijia_service">
+  <ul>
+    <span class="right_bar"></span>
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=525945990&site=qq&menu=yes" class="right_qq" target="_blank"></a>
+    <span class="right_phone">12345678956</span>
+  </ul>
+</div>       
+  <script type="text/javascript" src="__TMPL__Public/js/jquery.js"></script> 
+  <script type="text/javascript" src="__TMPL__Public/js/carousel.js"></script>     
+ <script>
+$(function(){
+	$(".lanrenzhijia_service").hover(function(){
+		$(this).animate({width:'160px'});
+	},function(){
+		$(this).animate({width:'40px'});
+	});
+});
+</script>
+		
+<tc_include file="Public:footer" />
+</div>
+</div>
+
+</body>
+</html>

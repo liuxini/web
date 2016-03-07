@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<tc_include file="Public:head" />
+</head>
+ <body>
+	<div id="wrapper-outer" >
+    	<div id="wrapper">
+        <div id="wrapper-inner">
+            <tc_include file="Public:bodyhead" />
+            	<div id="navigation">
+               		<tc_include file="Public:nav" />
+            	</div><!-- /.navigation -->
+            	<div id="content">
+            		<div class="container">
+            		<div id="main">
+						<div class="row">
+		 					<div class="span9">
+                                 <div class="property-detail box-shadow-1">
+                                      <div class="pull-left overview">
+										<h2><a text-align：center>{$post.helpername}</a></h2>
+                                         <div class="row" style="width: 222px;">
+                                             <div class="image span13">
+                                                 <php>$smeta=json_decode($post['smeta'],true);</php>
+                                                 <div class="content">  
+														<a href="{:leuu('portal/detail/index',array('id'=>$post.helperid))}"></a>
+                                                       <if condition="empty($smeta['thumb'])"> 
+                                                               <img src="__TMPL__Public/images/property-small-1.png" width ="150" height="200" alt=""/>
+                                                       <else /> 
+                                                               <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" width ="150" height="200" alt="" />
+                                                        </if>
+                                                                  <!-- /.bathrooms -->
+                                                  </div><!-- /.image -->                                                                                                 
+                                              </div>
+                                              
+                                                    <form method='post' action="{:U('detail/book')}">
+                                                        <input type="submit" class="btn btn-primary arrow-right" value="预约 ">
+                                                        <input type="hidden" name="helperid" value="{$post.helperid}"/>                                    
+                                                        <input type="hidden" name="type" value="{$post.type}"/>
+                                                    </form>
+                                                                                             
+                                         </div><!-- /.row -->
+									</div><!-- /.pull-left -->
+                                    
+                                <php>
+					            	$province = array("110000"=>"北京市","120000"=>"天津市","130000"=>"河北省","140000"=>"山西省","150000"=>"内蒙古自治区",
+					            					 "210000"=>"辽宁省","220000"=>"吉林省","230000"=>"黑龙江省","310000"=>"上海市","320000"=>"江苏省",
+					            					 "330000"=>"浙江省","340000"=>"安徽省","350000"=>"福建省","360000"=>"江西省","370000"=>"山东省",
+					            					 "410000"=>"河南省","420000"=>"湖北省","430000"=>"湖南省","440000"=>"广东省","450000"=>"广西壮族自治区",
+					            					 "460000"=>"海南省","500000"=>"重庆市","510000"=>"四川省","520000"=>"贵州省","530000"=>"云南省",
+					            					 "540000"=>"西藏自治区","610000"=>"陕西省","620000"=>"甘肃省","630000"=>"青海省","640000"=>"宁夏回族自治区",
+					            					 "650000"=>"新疆维吾尔自治区","710000"=>"台湾省","810000"=>"香港特别行政区","820000"=>"澳门特别行政区","900000"=>"外国"          		
+					            	);
+					            </php>
+                                    
+                                           
+									<div class="detail_right">
+                                        <ul class="tab">
+                                             <li><span class="current" data-for="area1">基本信息</span></li>
+                                         </ul>
+                                         <div class="summary area1" style="display: block;">                                                                                                           
+                                                <p><strong><th width="180"> 姓名 : </th></strong>{$post.helpername} </p>
+                                                <p><strong> 工作类型 : </strong>{$post.type} </p>
+                                                <p><strong> 现居地 : </strong>{$province[$post['province']]}{$post.city}{$post.livenow} </p>
+                                                <p><strong> 年龄 : </strong>{$post.age} </p>
+                                                 <p><strong> 民族 : </strong>{$post.nation} </p>                                                                                                                       
+                                                 <p><strong> 学历 : </strong>{$post.school} </p>
+                                                 <p><strong> 自我描述 : </strong>{$post.selfdesc} </p>
+                                                 <p><strong> 经纪人描述 : </strong>{$post.brokerdesc} </p>
+                                                 <p></p>
+                                                 <a href="{:leuu('portal/index/hits',array('id'=>$post['helperd']))}">收藏</a>
+
+                                        </div>    
+                                    </div>
+                                         
+                    </div><!--property-->
+                    <h2>用户印象</h2>
+                    <div class="property-detail box-shadow-1">
+                           <div class="clr"></div>
+                           <volist name="comment_list" id="vo">
+                                 <div class="reviewmain">
+                                    <p><strong>{$vo.full_name}</strong> 说道：</BR></BR>
+                                        {$vo.content}</BR></p>
+                                        <input type="hidden" name="id" value="{$vo.id}"/>
+                                 </div>
+                           </volist>
+                           <div class="clr"></div>
+                           <div class="clr"></div>
+                            <div class="pagination">{$Page}</div> 
+                           <div class="clr"></div>                   
+                           <if condition="$controller eq 1">
+                             <div class="property-detail">                              
+                                <form id="form1" method='post' action="{:U('detail/putreview')}">
+                                     <table cellpadding=2 cellspacing=2>                                                                
+                                         <tr><td >评价</td><td><textarea name="content" id="content" rows="5" cols="45"></textarea></td></tr>
+                                         <td><input type="submit" class="button" value="提交"></td>
+                                     </table>
+                                     <input type="hidden" name="helperid" value="{$post.helperid}"/>
+                                     <input type="hidden" name="helpername" value="{$post.helpername}"/>
+                                 </form>                               
+                                 </div>
+                                  <else /> <h5>你是游客/该阿姨没有为您服务过，不能评价她</h5>
+                            </if>
+                         </div>
+                                                                                                                                                  								            	
+		</div><!-- /.span9-->
+
+                       <div class="sidebar span3">
+                <div class="widget our-agents">
+    <div class="title">
+        <h2>门店</h2>
+    </div><!-- /.title -->
+
+    <div class="content">
+        <div class="agent">
+            <div class="image">
+                <img src="assets/img/photos/emma-small.png" alt="">
+            </div><!-- /.image -->
+            <div class="name">Victoria Summer</div><!-- /.name -->
+            <div class="phone">333-666-777</div><!-- /.phone -->
+            <div class="email"><a href="mailto:victoria@example.com">victoria@example.com</a></div><!-- /.email -->
+        </div><!-- /.agent -->
+
+        <div class="agent">
+            <div class="image">
+                <img src="assets/img/photos/john-small.png" alt="">
+            </div><!-- /.image -->
+            <div class="name">John Doe</div><!-- /.name -->
+            <div class="phone">111-222-333</div><!-- /.phone -->
+            <div class="email"><a href="mailto:john.doe@example.com">victoria@example.com</a></div><!-- /.email -->
+        </div><!-- /.agent -->
+    </div><!-- /.content -->
+</div><!-- /.our-agents -->
+                <div class="widget contact">
+    <div class="title">
+        <h2 class="block-title">Contact agent</h2>
+    </div><!-- /.title -->
+
+    <div class="content">
+        <form method="post">
+            <div class="control-group">
+                <label class="control-label" for="inputName">
+                    Name
+                    <span class="form-required" title="This field is required.">*</span>
+                </label>
+                <div class="controls">
+                    <input type="text" id="inputName">
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">
+                    Email
+                    <span class="form-required" title="This field is required.">*</span>
+                </label>
+                <div class="controls">
+                    <input type="text" id="inputEmail">
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+
+            <div class="control-group">
+                <label class="control-label" for="inputMessage">
+                    Message
+                    <span class="form-required" title="This field is required.">*</span>
+                </label>
+
+                <div class="controls">
+                    <textarea id="inputMessage"></textarea>
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+
+            <div class="form-actions">
+                <input type="submit" class="btn btn-primary arrow-right" value="Send">
+            </div><!-- /.form-actions -->
+        </form>
+    </div><!-- /.content -->
+</div><!-- /.widget -->
+            </div>
+                     
+					</div><!-- /.row-->
+				</div><!-- /.main-->
+            </div><!-- /.container-->
+        </div><!-- /.content-->
+      </div><!--./wrapper-inner-->
+     
+            <tc_include file="Public:footer" />
+            <tc_include file="Public:scripts" />
+     </div><!--./wrapper-->
+   </div><!--./wrapper-out-->
+</body>
+</html>

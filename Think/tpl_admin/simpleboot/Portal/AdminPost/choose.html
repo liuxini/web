@@ -1,0 +1,150 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	
+		<script type="text/javascript" src="__ROOT__/statics/js/TestAddress1.js"></script>
+ <script type="text/javascript" src="__ROOT__/statics/js/TestChooseAddress.js"></script> 
+ 
+ <script language="JavaScript">
+function loadProvince(regionId){
+  $("#id_provSelect").html("");
+  $("#id_provSelect").append("<option value=''>请选择省份</option>");
+  var jsonStr = getAddress(regionId,0);
+  for(var k in jsonStr) {
+	$("#id_provSelect").append("<option value='"+k+"'>"+jsonStr[k]+"</option>");
+  }
+  if(regionId.length!=6) {
+	$("#id_citySelect").html("");
+    $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  } else {
+	 $("#id_provSelect").val(regionId.substring(0,2)+"0000");
+	 loadCity(regionId);
+  }
+}
+
+function loadCity(regionId){
+  $("#id_citySelect").html("");
+  $("#id_citySelect").append("<option value=''>请选择城市</option>");
+  if(regionId.length==6) {
+	var jsonStr = getAddress(regionId,1);
+    for(var k in jsonStr) {
+	  $("#id_citySelect").append("<option value='"+jsonStr[k]+"'>"+jsonStr[k]+"</option>");
+    }
+	var str = regionId.substring(0,2);
+	if(str=="11" || str=="12" || str=="31" || str=="50") {
+	   $("#id_citySelect").val(regionId);
+	} else {
+	   $("#id_citySelect").val(regionId.substring(0,4)+"00");
+	}
+  }
+}
+</script>
+	
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">所有阿姨 </a></li>
+  </ul>
+  <form class="well form-search" method="post" action="{:u('AdminPost/choose')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">
+        
+        &nbsp;&nbsp;地区：
+        
+        <select id="id_provSelect" name="province" style="width:200px;" value="{$formget.province|default=''}" onChange="loadCity(this.value);">
+                 <option value="">请选择区域</option>
+              	</select>
+                <select id="id_citySelect" name="city" style="width:200px;" value="{$formget.city|default=''}">
+                    <option value="">请选择城市</option>
+         </select> 
+          <script language="JavaScript">loadProvince('110101');</script> 
+		&nbsp; &nbsp;姓名：
+        <input type="text" class="input length_2" name="keyword" style="width:100px;" value="{$formget.keyword}" placeholder="请输入姓名...">
+        &nbsp; &nbsp;类型：
+        <select name="type" style="width:150px;" id="type" value="{$formget.type}">  
+          <option value = >全部</option>  
+		  <option value ="月嫂">月嫂</option>  
+		  <option value ="育儿嫂">育儿嫂</option>  
+		  <option value="家务员">家务员</option>  
+		  <option value="临时小时工">临时小时工</option>  
+		  <option value ="包月小时工">包月小时工</option>  
+		  <option value ="老年陪护">老年陪护</option>  
+		  <option value="经纪人">经纪人</option>  
+		</select> 
+		<input type="hidden" id="reserid" name="reserid" value="{$reserid}">
+        <input type="submit" class="btn" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+  <form class="J_ajaxForm" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="45">ID</th>
+	            <th width="60">姓名</th>
+	            <th width="45">年龄</th>
+	            <th width="80">工作类型</th>
+	            <th width="80">现居地</th>
+	            <th width="80">薪资</th>
+	            
+                <th width="45">照片</th>
+	            <th width="60">经纪人id</th>
+	            <th width="45">收藏量</th>
+	            
+	            <th width="120"><span>创建时间</span></th>	        
+	            <th width="120">操作</th>
+	          </tr>
+        </thead>       	
+        	<foreach name="posts" item="vo">
+	        	<tr>		           
+		            <td><a>{$vo.helperid}</a></td>
+		            <td>
+		            	<a href="{:U('AdminPost/detail',array('id'=>$vo['helperid']))}" >
+		            		<span>{$vo.helpername}</span>
+		            	</a>
+		            </td>
+		            <td><a>{$vo.age}</a></td>
+		            <td><a>{$vo.type}</a></td>
+		            <td><a>{$vo.livenow}</a></td>
+		            <td><a>{$vo.salary}</a></td>
+		            <td>
+    	            <php>$smeta=json_decode($vo['smeta'],true);</php>
+    	            	<if condition="!empty($smeta['thumb'])"> 
+    	            		<a href="{:sp_get_asset_upload_path($smeta['thumb'])}" target='_blank'>查看</a>
+						</if>
+    	            </td>
+		            <td><a>{$vo.brokerid}</a></td>
+		            <td>{$vo.hits}</td>
+		               	   		         
+		            <td>{$vo.post_date}</td>
+		            <td>	  
+		            	<a href="{:U('AdminPost/detail',array('id'=>$vo['helperid']))}" target='_blank'>查看</a>|
+		            	<a href="{:U('AdminReservation/choose',array('id'=>$vo['helperid'],'reserid'=>$reserid))}">选择</a>		            	
+					</td>
+	          	</tr>
+          </foreach>
+          </table>
+          <div class="pagination">{$Page}</div>
+     
+    </div>
+  </form>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script>
+<script>
+
+function refersh_window() {
+    var refersh_time = getCookie('refersh_time');
+    if (refersh_time == 1) {
+        window.location="{:u('AdminPost/index',$formget)}";
+    }
+}
+
+setInterval(function(){
+	refersh_window();
+}, 2000);
+
+
+</script>
+</body>
+</html>

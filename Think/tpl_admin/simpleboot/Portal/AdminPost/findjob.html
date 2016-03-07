@@ -1,0 +1,137 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">所有申请 </a></li>
+  </ul>
+  <form class="well form-search" method="post" action="{:u('AdminPost/findjob')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">
+        
+        &nbsp;&nbsp;时间：
+        <input type="text" name="start_time" class="input length_2 J_date" value="{$formget.start_time|default=''}" style="width:80px;" autocomplete="off">-<input type="text" class="input length_2 J_date" name="end_time" value="{$formget.end_time}" style="width:80px;" autocomplete="off">
+
+               &nbsp; &nbsp;姓名：
+        <input type="text" class="input length_2" name="keyword" style="width:200px;" value="{$formget.keyword}" placeholder="请输入姓名...">
+        &nbsp; &nbsp;类型：
+        <select name="type" id="type" value="{$formget.type}">  
+               <option value = >全部</option>  
+		  <option value ="月嫂">月嫂</option>  
+		  <option value ="育儿嫂">育儿嫂</option>  
+		  <option value="家务员">家务员</option>  
+		  <option value="临时小时工">临时小时工</option>  
+		  <option value ="包月小时工">包月小时工</option>  
+		  <option value ="老年陪护">老年陪护</option>  
+		  <option value="经纪人">经纪人</option>  
+		</select>  
+        <input type="submit" class="btn" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+  <form class="J_ajaxForm" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="45">ID</th>
+	            <th width="60">姓名</th>
+	            <th width="45">年龄</th>
+	            <th width="80">工作类型</th>
+	            <th width="80">现居地</th>
+	            <th width="80">薪资</th>
+	            
+                <th width="45">照片</th>
+	            <th width="60">经纪人id</th>
+	            <th width="45">收藏量</th>
+	            
+	            <th width="120"><span>时间</span></th>
+	           
+	            <th width="120">操作</th>
+	          </tr>
+        </thead>
+        	
+        	<foreach name="posts" item="vo">
+	        	<tr>		           
+		            <td><a>{$vo.helperid}</a></td>
+		            <td>
+		            	<a href="{:U('AdminPost/detail',array('id'=>$vo['helperid']))}" >
+		            		<span>{$vo.helpername}</span>
+		            	</a>
+		            </td>
+		            <td><a>{$vo.age}</a></td>
+		            <td><a>{$vo.type}</a></td>
+		            <td><a>{$vo.livenow}</a></td>
+		            <td><a>{$vo.salary}</a></td>
+		            <td>
+    	            <php>$smeta=json_decode($vo['smeta'],true);</php>
+    	            	<if condition="!empty($smeta['thumb'])"> 
+    	            		<a href="{:sp_get_asset_upload_path($smeta['thumb'])}" target='_blank'>查看</a>
+						</if>
+    	            </td>
+		            <td><a>{$vo.brokerid}</a></td>
+		            <td>{$vo.hits}</td>
+		               	   		         
+		            <td>{$vo.post_date}</td>
+		            <td>	            	
+		            	<a href="{:U('AdminPost/detailfind',array('id'=>$vo['helperid']))}">查看</a>|
+		            	<a href="{:U('AdminPost/editfind',array('id'=>$vo['helperid']))}">修改信息</a>|		            	
+		            	<a href="{:U('AdminPost/clean',array('id'=>$vo['helperid']))}" class="J_ajax_del" >删除</a>|
+		            	<a href="{:U('AdminPost/pass',array('id'=>$vo['helperid']))}">通过</a>
+					</td>
+	          	</tr>
+          </foreach>
+          </table>
+          <div class="pagination">{$Page}</div>
+     
+    </div>
+  </form>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script>
+<script>
+
+function refersh_window() {
+    var refersh_time = getCookie('refersh_time');
+    if (refersh_time == 1) {
+        window.location="{:u('AdminPost/index',$formget)}";
+    }
+}
+
+setInterval(function(){
+	refersh_window();
+}, 2000);
+$(function () {
+	setCookie("refersh_time",0);
+    Wind.use('ajaxForm','artDialog','iframeTools', function () {
+        //批量移动
+        $('#J_Content_remove').click(function (e) {
+            var str = 0;
+            var id = tag = '';
+            $("input[name='ids[]']").each(function () {
+                if ($(this).attr('checked')) {
+                    str = 1;
+                    id += tag + $(this).val();
+                    tag = ',';
+                }
+            });
+            if (str == 0) {
+				art.dialog.through({
+					id:'error',
+					icon: 'error',
+					content: '您没有勾选信息，无法进行操作！',
+					cancelVal: '关闭',
+					cancel: true
+				});
+                return false;
+            }
+            var $this = $(this);
+           
+        });
+    });
+});
+
+
+</script>
+</body>
+</html>

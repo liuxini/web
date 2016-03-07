@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<tc_include file="Public:head" />
+
+</head>
+ <body>
+	<div id="wrapper-outer" >
+    	<div id="wrapper">
+        <div id="wrapper-inner">
+            <tc_include file="Public:bodyhead" />
+            	<div id="navigation">
+               		<tc_include file="Public:nav" />
+            	</div><!-- /.navigation -->
+            <div id="content">
+            	<div class="container">
+            		<div id="main">
+						<div class="row">
+		 					<div class="span9">
+		 						<div id="detail" class="property-detail1 box-shadow-1" >
+		 							<form action="{:U('index/findjob')}" method="post">
+		 								<div class="inside">
+		 							<h2><a text-align：center>{$post.username}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$post.type}</a></h2>
+		 							<p><strong>地址：</strong>{$post.address}</p>
+		 							<p><strong>可接受工资：</strong>{$post.pay}</p>
+		 							<p><strong>详细信息：</strong>{$post.message}</p>
+		 							<br/>
+                                   <input type="submit" value="发送简历" class="btn btn-primary btn-large " >
+                                   </div>
+                                  </form>
+		 						</div><!--property-->
+		 						<h2>你可能感兴趣</h2>
+		 						<div class="properties-grid">
+                      <div class="row">
+                        <foreach name="reservation"  item="vo">  
+                            <div class="property span3">
+                               <div class="title">
+                                   <h2><span class="value"><a href="{:leuu('portal/detail/showreser',array('id'=>$vo['reserid']))}">{$vo.username}</a></span></h2>
+                                </div><!-- /.area -->
+                                                            
+                              <div class="area">
+                                   <span class="key">类型：</span>
+                                   <span class="value">{$vo.type}</span>
+                               </div><!-- /.area -->  
+                                <div class="area">
+                                     <span class="key">地址：</span>
+                                     <span class="value">{$vo.address}</span>
+                                 </div>
+                              
+                                <div class="area">
+                                            <span class="key">可接受工资：</span>
+                                            <span class="value">{$vo.pay}</span>
+                                 </div><!-- /.area -->  
+                             </div><!--property-->
+
+                        </foreach>
+                      </div><!--row-->
+                    </div><!-- /.properties-grid -->
+		 		    <div class="pagination">{$Page}</div>		
+		 		</div><!--span9-->
+		 					
+		 					<div class="sidebar span3">
+                <div class="widget our-agents">
+    <div class="title">
+        <h2>门店</h2>
+    </div><!-- /.title -->
+
+    <div class="content">
+        <div class="agent">
+            <div class="image">
+                <img src="assets/img/photos/emma-small.png" alt="">
+            </div><!-- /.image -->
+            <div class="name">Victoria Summer</div><!-- /.name -->
+            <div class="phone">333-666-777</div><!-- /.phone -->
+            <div class="email"><a href="mailto:victoria@example.com">victoria@example.com</a></div><!-- /.email -->
+        </div><!-- /.agent -->
+
+        <div class="agent">
+            <div class="image">
+                <img src="assets/img/photos/john-small.png" alt="">
+            </div><!-- /.image -->
+            <div class="name">John Doe</div><!-- /.name -->
+            <div class="phone">111-222-333</div><!-- /.phone -->
+            <div class="email"><a href="mailto:john.doe@example.com">victoria@example.com</a></div><!-- /.email -->
+        </div><!-- /.agent -->
+    </div><!-- /.content -->
+</div><!-- /.our-agents -->
+                <div class="widget contact">
+    <div class="title">
+        <h2 class="block-title">Contact agent</h2>
+    </div><!-- /.title -->
+
+    <div class="content">
+        <form method="post">
+            <div class="control-group">
+                <label class="control-label" for="inputName">
+                    Name
+                    <span class="form-required" title="This field is required.">*</span>
+                </label>
+                <div class="controls">
+                    <input type="text" id="inputName">
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">
+                    Email
+                    <span class="form-required" title="This field is required.">*</span>
+                </label>
+                <div class="controls">
+                    <input type="text" id="inputEmail">
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+
+            <div class="control-group">
+                <label class="control-label" for="inputMessage">
+                    Message
+                    <span class="form-required" title="This field is required.">*</span>
+                </label>
+
+                <div class="controls">
+                    <textarea id="inputMessage"></textarea>
+                </div><!-- /.controls -->
+            </div><!-- /.control-group -->
+
+            <div class="form-actions">
+                <input type="submit" class="btn btn-primary arrow-right" value="Send">
+            </div><!-- /.form-actions -->
+        </form>
+    </div><!-- /.content -->
+</div><!-- /.widget -->
+                <div class="widget properties last">
+    <div class="title">
+        <h2>Latest Properties</h2>
+    </div><!-- /.title -->
+
+    <div class="content">
+        <div class="property">
+            <div class="image">
+                <a href="detail.html"></a>
+                <img src="assets/img/tmp/property-small-4.png" alt="">
+            </div><!-- /.image -->
+
+            <div class="wrapper">
+                <div class="title">
+                    <h3>
+                        <a href="detail.html">27523 Pacific Coast</a>
+                    </h3>
+                </div><!-- /.title -->
+                <div class="location">Palo Alto CA</div><!-- /.location -->
+                <div class="price">€2 300 000</div><!-- /.price -->
+            </div><!-- /.wrapper -->
+        </div><!-- /.property -->
+
+        <div class="property">
+            <div class="image">
+                <a href="detail.html"></a>
+                <img src="assets/img/tmp/property-small-5.png" alt="">
+            </div><!-- /.image -->
+
+            <div class="wrapper">
+                <div class="title">
+                    <h3>
+                        <a href="detail.html">27523 Pacific Coast</a>
+                    </h3>
+                </div><!-- /.title -->
+                <div class="location">Palo Alto CA</div><!-- /.location -->
+                <div class="price">€2 300 000</div><!-- /.price -->
+            </div><!-- /.wrapper -->
+        </div><!-- /.property -->
+
+        <div class="property">
+            <div class="image">
+                <a href="detail.html"></a>
+                <img src="assets/img/tmp/property-small-6.png" alt="">
+            </div><!-- /.image -->
+
+            <div class="wrapper">
+                <div class="title">
+                    <h3>
+                        <a href="detail.html">27523 Pacific Coast</a>
+                    </h3>
+                </div><!-- /.title -->
+                <div class="location">Palo Alto CA</div><!-- /.location -->
+                <div class="price">€2 300 000</div><!-- /.price -->
+            </div><!-- /.wrapper -->
+        </div><!-- /.property -->
+
+        <div class="property">
+            <div class="image">
+                <a href="detail.html"></a>
+                <img src="assets/img/tmp/property-small-2.png" alt="">
+            </div><!-- /.image -->
+
+            <div class="wrapper">
+                <div class="title">
+                    <h3>
+                        <a href="detail.html">27523 Pacific Coast</a>
+                    </h3>
+                </div><!-- /.title -->
+                <div class="location">Palo Alto CA</div><!-- /.location -->
+                <div class="price">€2 300 000</div><!-- /.price -->
+            </div><!-- /.wrapper -->
+        </div><!-- /.property -->
+    </div><!-- /.content -->
+</div><!-- /.properties -->
+            </div>
+		 					
+		 				</div><!--row-->
+		 			</div><!--main-->
+		 		</div><!--container-->
+		 	</div><!--content-->
+		 </div><!--inner-->
+		 <tc_include file="Public:footer"/>
+		 <tc_include file="Public:scripts" />
+		</div><!--wrapper-->
+	</div><!--outer-->
+</body>
+</html>

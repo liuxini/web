@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<tc_include file="Public:head"/>
+	
+<script language=javascript>
+function checkPasswords()
+{
+			var input_password = document.getElementById("input_password");  
+            var input_repassword = document.getElementById("input_repassword"); 
+
+		    if (input_password.value != input_repassword.value)  {
+            	input_repassword.setCustomValidity("两次密码必须输入一致！");      
+            } else  {
+            	input_repassword.setCustomValidity(''); 
+            }  
+                  	               
+}
+
+</script>
+
+<script language=javascript>
+function checkusername(){
+	
+	var input_username = document.getElementById("input_username");
+	var stripChar = '?<*.>\'"';
+	
+	var re_name= new RegExp("^[0-9]+$");
+	var re_name1= new RegExp("^[^\%\'\"\?<*.>]*$");
+	if(re_name.test(input_username.value)){
+		input_username.setCustomValidity("用户名不能全为数字！");
+	}else{
+
+		if(!( re_name1.test(input_username.value))){
+			input_username.setCustomValidity("用户名不能包含特殊字符！");
+		}else{
+			input_username.setCustomValidity(''); 
+		}
+	}	
+}
+</script>	
+</head>
+
+<body >
+<div id="wrapper-outer" >
+   <div id="wrapper">
+     <div id="wrapper-inner">	
+       <tc_include file="Public:bodyhead" />
+       <div id="navigation">
+           <tc_include file="Public:nav" />
+       </div>
+ 
+	<div id="content">
+		<div class="container">
+       	 <div id="main">
+            <h1 class="page-header">注册</h1>
+            	
+            <div class="login-register">
+	  	<div class="row">
+			<div class="span4 box-shadow-1">		
+            	<div class="tab-content">
+            		<form  action="{:U('user/register/doregister')}" method="post" >
+                	<div class="tab-pane active" id="register">
+                   		                 		
+							<div class="control-group" width="80px">
+								<label class="control-label" for="input_username">用户名</label>
+								<div class="controls">
+								<input type="text" id="input_username" required="required" name="username" placeholder="请输入用户名" onchange="checkusername()">
+							</div>
+						</div>
+					
+					<div class="control-group">
+					<label class="control-label" for="input_userphone">手机号</label>
+						<div class="controls">
+							<input type="text" id="input_userphone" required="required" name="userphone" placeholder="请输入手机号" class="span3" pattern="[0-9]{11,15}$" title="手机号格式不符">  
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="input_email">邮箱</label>
+						<div class="controls">
+							<input type="text" id="input_email" name="email" required="required" placeholder="请输入邮箱" pattern="^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$"  
+                        title="邮箱正确格式：xxx@xxx.xxx">  
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="input_password">密码</label>
+						<div class="controls">
+							<input type="password" id="input_password" name="password" required="required" placeholder="请输入密码"  pattern="^[A-Za-z\d-.@$]{6,20}$"  
+                        title="密码长度大于5小于20且不能包含中文或特殊字符密码">  
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="input_repassword">重复密码</label>
+						<div class="controls">
+							<input type="password" id="input_repassword" name="repassword" required="required" placeholder="请输入重复密码" onchange="checkPasswords()">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="input_verify">验证码</label>
+						<div class="controls">
+							<input type="text" id="input_verify" required name="verify" required="required" placeholder="请输入验证码" class="span3">
+							{:sp_verifycode_img('code_len=4&font_size=15&width=100&height=35&charset=1234567890')}
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="input_repassword" ></label>
+						<div class="controls">
+							<label class="checkbox persistent"><input type="checkbox" name="terms" value="1">
+								我同意<a href="#">网站内容服务条款</a></label>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="input_repassword"></label>
+						<div class="controls">
+							<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-wait="1500">确定注册</button>
+						</div>
+					</div>
+				</form>
+                </div><!-- /.tab-pane -->
+               
+            </div><!-- /.tab-content -->
+             
+        </div><!-- /.span4-->
+
+<div class="span18">
+    <div class="images row">
+        <div class="item span2">
+            <img src="__TMPL__Public/images/icons/circle-dollar.png" alt="">
+
+            <h3>低价</h3>
+        </div>
+        <!-- /.item -->
+        <div class="item span2">
+            <img src="__TMPL__Public/images/icons/circle-search.png" alt="">
+
+            <h3>方便</h3>
+        </div>
+        <!-- /.item -->
+        <div class="item span2">
+            <img src="__TMPL__Public/images/icons/circle-global.png" alt="">
+
+            <h3>快捷</h3>
+        </div>
+        <!-- /.item -->
+        <div class="item span2">
+            <img src="__TMPL__Public/images/icons/circle-package.png" alt="">
+
+            <h3>全面</h3>
+        </div>
+        <!-- /.item -->
+    </div>
+    <!-- /.row -->
+
+    <hr class="dotted">
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ullamcorper libero sed ante auctor vel
+        gravida nunc placerat. Suspendisse molestie posuere sem, in viverra dolor venenatis sit amet. Aliquam
+        gravida nibh quis justo pulvinar luctus. Phasellus a malesuada massa.
+    </p>
+
+    <ul class="unstyled dotted">
+        <li>
+      		<span class="inner">
+                 <strong>Lorem ipsum dolor sit amet</strong><br>
+
+                      Consectetur adipiscing elit. Proin aliquam lorem sed urna viverra
+                      accumsan. Aliquam sit amet dui et diam rutrum aliquet. Sed vulputate,
+                      arcu vitae aliquet facilisis, ligula sem posuere nisl, sit amet pretium
+                      ligula dolor
+
+            </span>
+        </li>
+        <li>
+      		<span class="inner">
+                 <strong>Lorem ipsum dolor sit amet</strong><br>
+
+                      Consectetur adipiscing elit. Proin aliquam lorem sed urna viverra
+                      accumsan. Aliquam sit amet dui et diam rutrum aliquet. Sed vulputate,
+                      arcu vitae aliquet facilisis, ligula sem posuere nisl, sit amet pretium
+                      ligula dolor
+
+            </span>
+        </li>
+        
+         <li>
+      		<span class="inner">
+                 <strong>Lorem ipsum dolor sit amet</strong><br>
+
+                      Consectetur adipiscing elit. Proin aliquam lorem sed urna viverra
+                      accumsan. Aliquam sit amet dui et diam rutrum aliquet. Sed vulputate,
+                      arcu vitae aliquet facilisis, ligula sem posuere nisl, sit amet pretium
+                      ligula dolor
+
+            </span>
+        </li>
+        		<li>
+      		<span class="inner">
+                 <strong>Lorem ipsum dolor sit amet</strong><br>
+
+                      Consectetur adipiscing elit. Proin aliquam lorem sed urna viverra
+                      accumsan. Aliquam sit amet dui et diam rutrum aliquet. Sed vulputate,
+                      arcu vitae aliquet facilisis, ligula sem posuere nisl, sit amet pretium
+                      ligula dolor
+
+            </span>
+        </li>    
+    		</ul>
+		</div><!--span8-->
+		</div><!-- /.row -->
+	</div><!-- /.login-register -->       
+        </div><!-- /.main-->
+	</div><!-- /container -->
+    </div><!-- /#content -->	
+	</div><!-- inner -->		
+            <tc_include file="Public:footer" />          
+            <tc_include file="Public:scripts" />
+</div><!-- /#wrapper -->
+</div><!-- /#wrapperout -->
+</body>
+</html>

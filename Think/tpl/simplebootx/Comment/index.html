@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>用户中心</title>
+<link href="__TMPL__Public/simpleboot/themes/cmf/theme.min.css" rel="stylesheet">
+<tc_include file="Public:head"/>
+<style>
+.control-label{
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+</style>
+</head>
+
+<body >	
+	<div id="wrapper-outer" >
+    <div id="wrapper">
+        <div id="wrapper-inner">
+	 <tc_include file="Public:bodyhead" />
+            <!-- NAVIGATION -->
+            <div id="navigation">
+               <tc_include file="Public:nav" />
+            </div><!-- /.navigation -->
+	<div id="content">
+		<div class="container">
+			<div id="main">
+                <div class="row">
+                    <div class="span3">
+	                    <tc_include file="Public:usernav"/>
+                    </div>
+                    <div class="span9">
+                           <div class="tabs ">
+                               <ul class="nav nav-tabs ">
+                                   <li class="active "><a href="#one" data-toggle="tab"><i class="fa fa-comments-o"></i> 我的订单</a></li>
+                               </ul>
+                               <div class="tab-content box-shadow-1">
+                                   <div class="tab-pane active" id="one">
+                                   		<table class="table table-bordered table-striped table-hover">
+									    <thead>
+									      <tr>
+									        <th>服务时间</th>
+									        <th>阿姨</th>
+									        <th>类型</th>		
+									        <th>订单状态</th>	
+									        <th width="150">操作</th>
+									      </tr>
+									    </thead>
+									    <tbody>
+									    <php>
+								        	$status=array("2"=>"订单处理失败","1"=>"订单处理成功","0"=>"处理中...");
+								        </php>
+									    <foreach name="service" item="vo">
+									      <tr>
+									        <td>{$vo.service_time}</td>
+									        <td>{$vo.helpername}</td>									       
+									        <td>{$vo.type}</td>	
+									         <td>{$status[$vo['status']]}</td>
+									        <td>
+									        	<a href="{:leuu('portal/detail/index',array('id'=>$vo['helperid']))}">查看阿姨</a>					        	 
+									        </td>
+									       
+									      </tr>
+									    </foreach>
+									    </tbody>
+									  </table>
+                                   </div>
+                                   
+                                   <div class="pager">{$pager}</div>
+                               </div>							
+                           </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<!-- /container -->
+	<tc_include file="Public:footer" />
+	<tc_include file="Public:scripts" />
+	</div>
+	</div>
+</body>
+</html>

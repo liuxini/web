@@ -1,0 +1,111 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed" style="min-width:800px;">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">所有预约 </a></li>
+  </ul>
+  <form class="well form-search" method="post" action="{:u('AdminReservation/index')}">
+    <div class="search_type cc mb10">
+      <div class="mb10"> 
+        <span class="mr20">
+        
+        &nbsp;&nbsp;时间：
+        <input type="text" name="start_time" class="input length_2 J_date" value="{$formget.start_time|default=''}" style="width:80px;" autocomplete="off">-<input type="text" class="input length_2 J_date" name="end_time" value="{$formget.end_time}" style="width:80px;" autocomplete="off">
+        
+        &nbsp; &nbsp;姓名：
+        <input type="text" class="input length_2" name="keyword" style="width:200px;" value="{$formget.keyword}" placeholder="请输入雇主姓名...">
+        &nbsp; &nbsp;类型：
+        <select name="type" id="type" value="{$formget.type}">  
+               <option value = >全部</option>  
+		  <option value ="0">处理中</option>  
+		  <option value ="1">成功</option>  
+		  <option value="2">失败</option>  
+		</select>  
+        <input type="submit" class="btn" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+
+  <form class="J_ajaxForm" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+            <tr>
+            <th width="16"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+               <th width="45">ID</th>
+              <th width="70">雇主姓名</th>
+              <th width="140"><span>预约时间</span></th>
+              <th width="80">服务类型</th>
+              
+              <th width="80">薪资</th>
+              <th width="80">地址</th>
+          
+              <th width="80">状态</th>
+              <th width="100">操作</th>
+              <th width="160">选择</th>
+            </tr>
+        </thead>
+        <php>           
+            $is_status=array("1"=>"预约成功","0"=>"新建成功，处理中","2"=>"预约失败");
+            $recommend_status=array("1"=>"已推荐","0"=>"未推荐"); 
+          </php>
+          <foreach name="posts" item="vo">
+           <td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.reserid}" ></td>
+              <td><a>{$vo.reserid}</a></td>
+                <td> <a >{$vo.username}</a></td>
+                <td><a>{$vo.reservate_time}</a></td>
+                <td><a>{$vo.type}</a></td>
+                <td><a>{$vo.pay}</a></td>
+                <td><a>{$vo.address}</a></td>
+                <td>{$is_status[$vo['status']]}|
+                {$recommend_status[$vo['recommended']]}</td>
+               <if condition=" $vo['status'] eq 0 ">
+                 
+                <td>                
+                  <a href="{:U('AdminReservation/detail',array('id'=>$vo['reserid']))}">查看</a>|
+                  <a href="{:U('AdminReservation/edit',array('id'=>$vo['reserid']))}">更新</a>|                 
+                  <a href="{:U('AdminReservation/delete',array('id'=>$vo['reserid']))}" class="J_ajax_del" >删除</a></td>
+                  <else />   <td>  
+                  <a href="{:U('AdminReservation/detail',array('id'=>$vo['reserid']))}">查看</a>|           
+                  <a href="{:U('AdminReservation/delete',array('id'=>$vo['reserid']))}" class="J_ajax_del" >删除</a>
+                   </td>
+             </if>
+         
+          <if condition=" $vo['status'] eq 0 ">
+            <td>
+              <a href="javascript:open_iframe_dialog('{:u('AdminPost/choose',array('reserid'=>$vo['reserid']))}','选择阿姨')">添加阿姨信息</a>|
+                <a href="{:U('AdminReservation/yuyue',array('id'=>$vo['reserid']))}">预约失败</a>           
+            </td>
+            <else /><td> <td>
+          </if>
+          </tr>
+          </foreach>
+          </table>
+          <div class="pagination">{$Page}</div>    
+    </div>
+       <div class="form-actions">
+        <label class="checkbox inline" for="check_all"><input type="checkbox" class="J_check_all" data-direction="y" data-checklist="J_check_y" id="check_all">全选</label>                
+       <button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminReservation/recommend',array('recommend'=>1))}" data-subcheck="true" >推荐</button>
+       <button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminReservation/recommend',array('unrecommend'=>1))}" data-subcheck="true" >取消推荐</button>
+    </form>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script>
+<script>
+
+function refersh_window() {
+    var refersh_time = getCookie('refersh_time');
+    if (refersh_time == 1) {
+        window.location="{:u('AdminPost/index',$formget)}";
+    }
+}
+
+setInterval(function(){
+  refersh_window();
+}, 2000);
+
+</script>
+
+
+</body>
+</html>
